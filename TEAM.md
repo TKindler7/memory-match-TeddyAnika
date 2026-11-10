@@ -1,6 +1,8 @@
 # Our Team
 
 Team name:
+T.A
 
 Members:
-Anika
+Teddy Kindler
+Anika Kumar
