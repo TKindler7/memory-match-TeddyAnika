@@ -1,5 +1,6 @@
 # Our Team
 
-Team name:
+Team name: TA
 
 Members:
+Douglas Kiang
