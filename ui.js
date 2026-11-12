@@ -24,8 +24,7 @@ function render() {
     tableEl.appendChild(button);
   });
 
-  // TODO T2: Show the number of moves and matches in statusEl.
-  statusEl.textContent = "";
+  statusEl.textContent = `Moves: ${state.moves} | Matches: ${state.matches}/${PAIRS}`;
 
   if (isWon()) {
     statusEl.textContent = `You won in ${state.moves} moves!`;
