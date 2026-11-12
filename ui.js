@@ -4,7 +4,10 @@
 const tableEl = document.getElementById("table");
 const statusEl = document.getElementById("status");
 const newGameButton = document.getElementById("new-game");
+const easyButton = document.getElementById("easy");
+const hardButton = document.getElementById("hard");
 let missTimeout = null;
+let selectedPairs = PAIRS;
 
 function render() {
   tableEl.innerHTML = "";
@@ -33,7 +36,7 @@ function render() {
     : `Best: ${state.bestMoves} moves`;
   statusEl.textContent = won
     ? `You won in ${state.moves} moves! | ${bestScore}`
-    : `Moves: ${state.moves} | Matches: ${state.matches}/${PAIRS} | ${bestScore}`;
+    : `Moves: ${state.moves} | Matches: ${state.matches}/${selectedPairs} | ${bestScore}`;
 }
 
 function handleClick(index) {
@@ -48,14 +51,28 @@ function handleClick(index) {
   }
 }
 
-newGameButton.addEventListener("click", function () {
+function startNewGame(pairs) {
   if (missTimeout !== null) {
     clearTimeout(missTimeout);
     missTimeout = null;
   }
-  newGame(PAIRS);
+  selectedPairs = pairs;
+  easyButton.setAttribute("aria-pressed", String(pairs === PAIRS));
+  hardButton.setAttribute("aria-pressed", String(pairs === HARD_PAIRS));
+  newGame(pairs);
   render();
+}
+
+easyButton.addEventListener("click", function () {
+  startNewGame(PAIRS);
 });
 
-newGame(PAIRS);
-render();
+hardButton.addEventListener("click", function () {
+  startNewGame(HARD_PAIRS);
+});
+
+newGameButton.addEventListener("click", function () {
+  startNewGame(selectedPairs);
+});
+
+startNewGame(PAIRS);
