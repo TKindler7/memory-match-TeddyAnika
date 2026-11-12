@@ -30,7 +30,9 @@ function pickCard(index) {
   // return "first". If it's the second pick, compare the two cards:
   //   - same face: mark both matched, add 1 to state.matches, return "match"
   //   - different: lock the table and return "miss"
-  // TODO R3: Add 1 to state.moves on every second pick.
+  if (state.firstPick !== null && state.secondPick === index) {
+    state.moves += 1;
+  }
 
   return "first";
 }
@@ -42,6 +44,7 @@ function hideMiss() {
 }
 
 function isWon() {
-  // TODO R3: Return true when every card on the table is matched.
-  return false;
+  return state.cards.length > 0 && state.cards.every(function (card) {
+    return card.matched;
+  });
 }
