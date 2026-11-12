@@ -19,27 +19,48 @@ function newGame(pairs) {
 }
 
 function pickCard(index) {
-  const card = state.cards[index];
+  if (!Number.isInteger(index) || index < 0 || index >= state.cards.length) {
+    return "ignored";
+  }
 
-  // TODO R2: Return "ignored" if the table is locked, or if this card is
-  // already flipped or matched.
+  const card = state.cards[index];
+  if (state.locked || card.flipped || card.matched) {
+    return "ignored";
+  }
 
   card.flipped = true;
 
-  // TODO R2: If this is the first pick of the turn, remember it and
-  // return "first". If it's the second pick, compare the two cards:
-  //   - same face: mark both matched, add 1 to state.matches, return "match"
-  //   - different: lock the table and return "miss"
-  if (state.firstPick !== null && state.secondPick === index) {
-    state.moves += 1;
+  if (state.firstPick === null) {
+    state.firstPick = index;
+    return "first";
   }
 
-  return "first";
+  state.secondPick = index;
+  // TODO R3: Add 1 to state.moves on every second pick.
+
+  const firstCard = state.cards[state.firstPick];
+  if (firstCard.face === card.face) {
+    firstCard.matched = true;
+    card.matched = true;
+    state.matches += 1;
+    state.firstPick = null;
+    state.secondPick = null;
+    return "match";
+  }
+
+  state.locked = true;
+  return "miss";
 }
 
 function hideMiss() {
-  // TODO R2: Turn the two picked cards face down, clear both picks,
-  // and unlock the table.
+  if (!state.locked) {
+    return;
+  }
+
+  state.cards[state.firstPick].flipped = false;
+  state.cards[state.secondPick].flipped = false;
+  state.firstPick = null;
+  state.secondPick = null;
   state.locked = false;
 }
 
