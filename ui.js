@@ -17,6 +17,9 @@ function render() {
     button.className = "card";
     if (card.flipped || card.matched) {
       button.classList.add("card--revealed");
+      if (card.matched) {
+        button.classList.add("card--matched");
+      }
       button.textContent = card.face;
     } else {
       button.textContent = CARD_BACK;
