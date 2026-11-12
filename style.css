@@ -2,15 +2,41 @@
 
 body {
   font-family: system-ui, sans-serif;
-  margin: 24px;
+  margin: 0;
+  min-height: 100vh;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  color: #f2f5ff;
+  background: radial-gradient(circle at top, #243b72, #10182f 65%);
 }
 
-/* TODO T1: Lay the cards out in a neat grid (4 across works for 16 cards),
-   and give them a look that fits your team's theme. */
+#table {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  width: min(100%, 440px);
+  margin: 24px auto;
+}
 
 .card {
-  font-size: 2rem;
-  width: 80px;
-  height: 100px;
-  margin: 4px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border: 2px solid #86a5e8;
+  border-radius: 12px;
+  color: #fff;
+  background: #182750;
+  box-shadow: 0 4px 12px #070e25a6;
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  cursor: pointer;
+}
+
+.card--revealed {
+  color: #142044;
+  background: #eef4ff;
+  border-color: #b7d7ff;
+}
+
+.card:focus-visible {
+  outline: 3px solid #ffd76b;
+  outline-offset: 3px;
 }

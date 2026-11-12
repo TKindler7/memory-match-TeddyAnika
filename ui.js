@@ -11,6 +11,7 @@ function render() {
     const button = document.createElement("button");
     button.className = "card";
     if (card.flipped || card.matched) {
+      button.classList.add("card--revealed");
       button.textContent = card.face;
     } else {
       button.textContent = CARD_BACK;
