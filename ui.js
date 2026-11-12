@@ -3,6 +3,8 @@
 
 const tableEl = document.getElementById("table");
 const statusEl = document.getElementById("status");
+const newGameButton = document.getElementById("new-game");
+let missTimeout = null;
 
 function render() {
   tableEl.innerHTML = "";
@@ -11,6 +13,7 @@ function render() {
     const button = document.createElement("button");
     button.className = "card";
     if (card.flipped || card.matched) {
+      button.classList.add("card--revealed");
       button.textContent = card.face;
     } else {
       button.textContent = CARD_BACK;
@@ -21,25 +24,38 @@ function render() {
     tableEl.appendChild(button);
   });
 
-  // TODO T2: Show the number of moves and matches in statusEl.
-  statusEl.textContent = "";
-
-  // TODO T3: When isWon() is true, show a win message with the move count.
+  const won = isWon();
+  if (won) {
+    recordBestScore();
+  }
+  const bestScore = state.bestMoves === null
+    ? "No best score yet"
+    : `Best: ${state.bestMoves} moves`;
+  statusEl.textContent = won
+    ? `You won in ${state.moves} moves! | ${bestScore}`
+    : `Moves: ${state.moves} | Matches: ${state.matches}/${PAIRS} | ${bestScore}`;
 }
 
 function handleClick(index) {
   const result = pickCard(index);
   render();
   if (result === "miss") {
-    setTimeout(function () {
+    missTimeout = setTimeout(function () {
       hideMiss();
+      missTimeout = null;
       render();
     }, 800);
   }
 }
 
-// TODO T3: Add a "New game" button to index.html. When it's clicked,
-// call newGame(PAIRS) and then render().
+newGameButton.addEventListener("click", function () {
+  if (missTimeout !== null) {
+    clearTimeout(missTimeout);
+    missTimeout = null;
+  }
+  newGame(PAIRS);
+  render();
+});
 
 newGame(PAIRS);
 render();
