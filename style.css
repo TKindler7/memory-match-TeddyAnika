@@ -18,6 +18,19 @@ body {
   margin: 24px auto;
 }
 
+#difficulty {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+#difficulty button[aria-pressed="true"] {
+  color: #142044;
+  background: #eef4ff;
+  border-color: #b7d7ff;
+}
+
 .card {
   width: 100%;
   aspect-ratio: 4 / 5;

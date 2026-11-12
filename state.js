@@ -2,8 +2,9 @@
 // Every file reads this. Nobody edits it alone.
 // To change it: open a pull request and get approval from EVERY teammate.
 
-// How many pairs of cards are on the table.
-const PAIRS = 8;
+// Easy is the default; Hard uses all ten faces in deck.js.
+const PAIRS = 6;
+const HARD_PAIRS = 10;
 const BEST_SCORE_KEY = "memory-match-best-moves";
 
 function loadBestScore() {
@@ -53,3 +54,4 @@ function recordBestScore() {
 // game.js   isWon()           -> true when every card is matched
 // ui.js     render()          -> redraws the whole table from state
 // state.js  recordBestScore() -> saves a new lowest move count after a win
+// state.js  PAIRS, HARD_PAIRS -> pair counts for Easy and Hard games
