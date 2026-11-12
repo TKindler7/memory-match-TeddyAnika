@@ -24,11 +24,16 @@ function render() {
     tableEl.appendChild(button);
   });
 
-  statusEl.textContent = `Moves: ${state.moves} | Matches: ${state.matches}/${PAIRS}`;
-
-  if (isWon()) {
-    statusEl.textContent = `You won in ${state.moves} moves!`;
+  const won = isWon();
+  if (won) {
+    recordBestScore();
   }
+  const bestScore = state.bestMoves === null
+    ? "No best score yet"
+    : `Best: ${state.bestMoves} moves`;
+  statusEl.textContent = won
+    ? `You won in ${state.moves} moves! | ${bestScore}`
+    : `Moves: ${state.moves} | Matches: ${state.matches}/${PAIRS} | ${bestScore}`;
 }
 
 function handleClick(index) {
