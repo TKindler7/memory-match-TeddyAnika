@@ -39,7 +39,7 @@ function pickCard(index) {
   }
 
   state.secondPick = index;
-  // TODO R3: Add 1 to state.moves on every second pick.
+  state.moves += 1;
 
   const firstCard = state.cards[state.firstPick];
   if (firstCard.face === card.face) {
