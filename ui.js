@@ -3,6 +3,8 @@
 
 const tableEl = document.getElementById("table");
 const statusEl = document.getElementById("status");
+const newGameButton = document.getElementById("new-game");
+let missTimeout = null;
 
 function render() {
   tableEl.innerHTML = "";
@@ -25,22 +27,31 @@ function render() {
   // TODO T2: Show the number of moves and matches in statusEl.
   statusEl.textContent = "";
 
-  // TODO T3: When isWon() is true, show a win message with the move count.
+  if (isWon()) {
+    statusEl.textContent = `You won in ${state.moves} moves!`;
+  }
 }
 
 function handleClick(index) {
   const result = pickCard(index);
   render();
   if (result === "miss") {
-    setTimeout(function () {
+    missTimeout = setTimeout(function () {
       hideMiss();
+      missTimeout = null;
       render();
     }, 800);
   }
 }
 
-// TODO T3: Add a "New game" button to index.html. When it's clicked,
-// call newGame(PAIRS) and then render().
+newGameButton.addEventListener("click", function () {
+  if (missTimeout !== null) {
+    clearTimeout(missTimeout);
+    missTimeout = null;
+  }
+  newGame(PAIRS);
+  render();
+});
 
 newGame(PAIRS);
 render();
